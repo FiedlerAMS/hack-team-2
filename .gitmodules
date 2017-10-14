@@ -1,0 +1,4 @@
+[submodule "facebook"]
+	path = facebook
+	url = https://github.com/salatos/facebook-events-by-location-core.git
+    branch = fiedler

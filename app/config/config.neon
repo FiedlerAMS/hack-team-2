@@ -32,3 +32,7 @@ services:
 	- Hack\Map\MapFactoryInterface
 
 	router: App\RouterFactory::createRouter
+
+	- Hack\Facebook\FacebookRequester
+	- Hack\Facebook\EventsFetcher
+	- Hack\Facebook\AttendeesCounter
