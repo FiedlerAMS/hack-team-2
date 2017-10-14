@@ -31,8 +31,10 @@
 		"webmozart/assert": "^1.2"
 	},
     "autoload": {
-		"App\\": ["src/App/"],
-        "psr-4": {"Hack\\": "src/"}
+        "psr-4": {
+            "Hack\\": "src/",
+            "App\\": "src/App/"
+        }
     },
 	"require-dev": {
 		"nette/tester": "^2.0"
