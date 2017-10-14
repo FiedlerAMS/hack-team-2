@@ -55,3 +55,5 @@ services:
     - Hack\Api\StationsFetcher
     - Hack\Api\ChannelFetcher
     - Hack\Api\ChannelDataFetcher
+
+    - Hack\Api\Bus\BusesUseCase

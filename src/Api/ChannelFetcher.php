@@ -30,7 +30,7 @@ class ChannelFetcher
             $response = $this->fiedlerRequester->get("/stations/{$station->id}/channels");
             $channels = $this->hydrate($response->body, $station);
             $filtered = $this->filterChannels($channels, $type);
-            $station->channels = $filtered;
+            $station->channels += $filtered;
         }
 
         return $stations;

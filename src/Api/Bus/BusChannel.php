@@ -4,7 +4,7 @@ namespace Hack\Api\Bus;
 
 class BusChannel
 {
-    const PASSENGERS = 'passengers';
+    const PASSENGERS = 'pasengers';
     const THERMOMETER = 'thermometer';
     const TANK = 'tank';
     const GPS_LAT = 'gps-lat';
