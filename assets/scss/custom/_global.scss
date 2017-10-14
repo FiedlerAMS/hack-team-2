@@ -48,6 +48,7 @@ body {
 .gmap-container {
     background: $gray-300;
     position: fixed;
+    // z-index: 1000;
     top: 0;
     bottom: 0;
     right: 0;
@@ -74,3 +75,38 @@ body {
     box-shadow: 0 0 .7rem rgba(#000, .2);
 }
 
+/*
+ * Sidepanel
+ */
+
+.modal-backdrop {
+    z-index: 999;
+}
+.sidepanel.modal {
+    padding: 0!important;
+    z-index: 1000;
+
+    &.fade .modal-dialog {
+        @include transition($modal-transition);
+        transform: translate(-50%, 0);
+    }
+    &.show .modal-dialog { transform: translate(0, 0); }
+
+    .modal-dialog {
+        background: $white;
+        border-radius: 0;
+        max-width: 75%;
+        height: 100%;
+        margin: 0;
+    }
+
+    .modal-content {
+        border-radius: 0;
+        border: none;
+        top: 3.5rem;
+        height: calc(100%-4rem);
+    }
+
+    .modal-header {
+    }
+}
