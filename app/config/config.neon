@@ -1,39 +1,51 @@
-#
-# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
-# https://nette.org/security-warning
-#
 parameters:
-
+    openweather:
+        url: "http://api.openweathermap.org/data/2.5/"
+        historyUrl: "http://history.openweathermap.org/data/2.5/"
+        cityId: "3077916"
+        apiKey: "c18774642d980691447175c48ef25c49" # Sec F8713820b20f3638fd5c114f5956a7d4
 
 application:
-	errorPresenter: Error
-	mapping:
-		*: App\*Module\Presenters\*Presenter
+    errorPresenter: Error
+    mapping:
+        *: App\*Module\Presenters\*Presenter
 
 
 session:
-	expiration: 14 days
+    expiration: 14 days
 
 
 database:
-	dsn: 'mysql:host=127.0.0.1;dbname=test'
-	user:
-	password:
-	options:
-		lazy: yes
+    dsn: 'mysql:host=127.0.0.1;dbname=test'
+    user:
+    password:
+    options:
+        lazy: yes
 
 
 services:
-	- App\Model\UserManager
-	- App\Forms\FormFactory
-	- App\Forms\SignInFormFactory
-	- App\Forms\SignUpFormFactory
+    # App
+    - App\Model\UserManager
+    - App\Forms\FormFactory
+    - App\Forms\SignInFormFactory
+    - App\Forms\SignUpFormFactory
+    router: App\RouterFactory::createRouter
 
-	- Hack\Map\MapFactoryInterface
+    # Map
+    - Hack\Map\MapFactoryInterface
 
-	router: App\RouterFactory::createRouter
+    # Facebook event fetcher
+    - Hack\Facebook\FacebookRequester
+    - Hack\Facebook\EventsFetcher
+    - Hack\Facebook\AttendeesCounter
+    - Hack\Facebook\GetAttendeesForEventsInTimeUseCase
 
-	- Hack\Facebook\FacebookRequester
-	- Hack\Facebook\EventsFetcher
-	- Hack\Facebook\AttendeesCounter
-	- Hack\Facebook\GetAttendeesForEventsInTimeUseCase
+    # Weather
+    httpClient: App\Http\Client(false)
+    weatherApi: Hack\OpenWeather\OpenWeatherApi(
+        ...,
+        %openweather.url%,
+        %openweather.historyUrl%,
+        %openweather.apiKey%,
+        %openweather.cityId%
+    )
