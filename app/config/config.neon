@@ -28,4 +28,7 @@ services:
 	- App\Forms\FormFactory
 	- App\Forms\SignInFormFactory
 	- App\Forms\SignUpFormFactory
+
+	- Hack\Map\MapFactoryInterface
+
 	router: App\RouterFactory::createRouter

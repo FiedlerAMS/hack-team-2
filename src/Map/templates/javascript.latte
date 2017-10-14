@@ -1,0 +1,54 @@
+<script>
+    var map;
+    function initMap() {
+        var mapElement = document.getElementById('map');
+
+        map = new google.maps.Map(mapElement, {
+            zoom: parseInt({$zoom}),
+            center: {$center|noescape},
+            streetViewControl: false,
+            fullscreenControl: false,
+            mapTypeControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
+            },
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_CENTER
+            }
+        });
+        var iw = new google.maps.InfoWindow();
+        var markerList = {};
+        
+        var openInfoWindow = function(marker){
+            iw.setContent(marker.desc);
+            iw.open(map, marker);
+        };
+
+        var scrollListToTop = function() {
+            var section = $('.js-map-grid-wrapper').parent();
+            var rect = section[0].getBoundingClientRect();
+            if (rect.top > 70) {
+                $('html,body').animate({ scrollTop: section.offset().top - 70 }, 200);
+            }
+        };
+
+        $('.js-map-grid-wrapper').on('click', function(e){
+            var button = $(e.target).closest('.js-map-record-target');
+            if (!button.length) {
+                return;
+            }
+
+            e.preventDefault();
+            var id = button.data('map-id');
+            var marker = markerList[id];
+            if (undefined === marker) {
+                return;
+            }
+
+            scrollListToTop();
+            map.panTo(marker.getPosition());
+            openInfoWindow(marker);
+        });
+
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={$googleApiKey}&callback=initMap"></script>
