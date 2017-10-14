@@ -2,7 +2,6 @@
 
 namespace Hack\Map;
 
-use App\Utils\GoogleApiKey;
 use Nette\Application\UI\Control;
 use Webmozart\Assert\Assert;
 
@@ -22,7 +21,7 @@ class Map extends Control
     {
         parent::__construct();
         $this->googleApiKey = 'AIzaSyCsRdKR2PpfHiW9ZnAWswmQePCVvwiVTdw';
-        $this->setCenter(48.714891, 14.117479);
+        $this->setCenter(48.9834198, 14.4698109);
         $this->setZoom(10);
         $this->setDisplayResizingButton(false);
     }
@@ -58,6 +57,9 @@ class Map extends Control
     {
         $this->template->center = $this->center;
         $this->template->zoom = $this->zoom;
+        $this->template->records = json_encode(array_map(function (MapRecord $record) {
+            return $record->toArray();
+        }, $this->records));
         $this->template->googleApiKey = $this->googleApiKey;
         $this->template->setFile(__DIR__ . '/templates/javascript.latte');
         $this->template->render();

@@ -3,6 +3,7 @@
 namespace App\Presenters;
 
 use Hack\Map\MapFactoryInterface;
+use Hack\Map\MapRecord;
 use Hack\OpenWeather\OpenWeatherApi;
 
 class HomepagePresenter extends BasePresenter
@@ -26,7 +27,19 @@ class HomepagePresenter extends BasePresenter
 
     public function renderDefault()
     {
-        $this->template->anyVariable = 'any value';
+        $records = [
+            new MapRecord(
+                'foo',
+                'bar',
+                '#',
+                'abc',
+                'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                48.9834198,
+                14.4698109,
+                'qqq'
+            ),
+        ];
+        $this['map']->setRecords($records);
     }
 
     public function actionWeather()

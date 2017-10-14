@@ -23,6 +23,34 @@
             iw.open(map, marker);
         };
 
+        var records = {$records|noescape};
+        for (var key in records){
+            if(!records.hasOwnProperty(key)){
+                continue;
+            }
+
+            (function(){
+                var markerData = records[key];
+                var markerImageHtml = markerData.image ? '<img src="' + markerData.image + '" alt="' + markerData.title + '"/>' : '';
+                var marker = new google.maps.Marker({
+                    position: {
+                        lat: parseFloat(markerData.latitude),
+                        lng: parseFloat(markerData.longitude)
+                    },
+                    icon: markerData.marker,
+                    map: map,
+                    title: markerData.title,
+                    draggable: false,
+                    animation: google.maps.Animation.DROP,
+                    desc: ''
+                });
+                marker.addListener('click', function() {
+                    openInfoWindow(marker);
+                });
+                markerList[markerData.htmlTargetId] = marker;
+            })();
+        }
+
         var scrollListToTop = function() {
             var section = $('.js-map-grid-wrapper').parent();
             var rect = section[0].getBoundingClientRect();
