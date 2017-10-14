@@ -1,0 +1,78 @@
+// Colors
+//
+// Grayscale and brand colors for use across Bootstrap.
+
+$white:  #fff;
+$gray-100: #eef2f4;
+$gray-200: #dee2e6;
+$gray-300: #c8d0d6;
+$gray-400: #95a5a6;
+$gray-500: #adb5bd;
+$gray-600: #868e96;
+$gray-700: #373a3c;
+$gray-800: #2C3E50;
+$gray-900: #343a40;
+$black:  #000;
+
+$grays: (
+  100: $gray-100,
+  200: $gray-200,
+  300: $gray-300,
+  400: $gray-400,
+  500: $gray-500,
+  600: $gray-600,
+  700: $gray-700,
+  800: $gray-800,
+  900: $gray-900
+) !default;
+
+$blue:    #3498DB;
+$indigo:  #6610f2;
+$purple:  #613d7c;
+$pink:    #ff5b77;
+$red:     #d9534f;
+$orange:  #E74C3C;
+$yellow:  #F39C12;
+$green:   #3bc158;
+$teal:    #18BC9C;
+$cyan:    #5bc0de;
+
+$colors: (
+  blue: $blue,
+  indigo: $indigo,
+  purple: $purple,
+  pink: $pink,
+  red: $red,
+  orange: $orange,
+  yellow: $yellow,
+  green: $green,
+  teal: $teal,
+  cyan: $cyan,
+  white: $white,
+  gray: $gray-600,
+  gray-dark: $gray-800
+);
+
+$theme-colors: (
+  primary: $blue,
+  secondary: $gray-600,
+  success: $green,
+  info: $cyan,
+  warning: $yellow,
+  danger: $red,
+  light: $gray-100,
+  dark: $gray-800
+);
+
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+$enable-rounded:            true !default;
+$enable-shadows:            false !default;
+$enable-gradients:          false !default;
+$enable-transitions:        true !default;
+$enable-hover-media-query:  false !default;
+$enable-grid-classes:       true !default;
+$enable-print-styles:       true !default;
