@@ -49,3 +49,9 @@ services:
         %openweather.apiKey%,
         %openweather.cityId%
     )
+
+    # Api
+    - Hack\Api\FiedlerRequester
+    - Hack\Api\StationsFetcher
+    - Hack\Api\ChannelFetcher
+    - Hack\Api\ChannelDataFetcher
