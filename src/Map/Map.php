@@ -21,7 +21,7 @@ class Map extends Control
     public function __construct()
     {
         parent::__construct();
-        $this->googleApiKey = "";
+        $this->googleApiKey = 'AIzaSyCsRdKR2PpfHiW9ZnAWswmQePCVvwiVTdw';
         $this->setCenter(48.714891, 14.117479);
         $this->setZoom(10);
         $this->setDisplayResizingButton(false);
