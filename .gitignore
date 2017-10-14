@@ -5,3 +5,11 @@ vendor/*
 !.htaccess
 !web.config
 app/config/config.local.neon
+node_modules
+*.map
+
+www/css/main.css
+www/js/concat.js
+www/js/concat-debug.js
+
+gulp-config.local.json

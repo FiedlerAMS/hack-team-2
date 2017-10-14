@@ -1,0 +1,35 @@
+{
+  "name": "fiedler",
+  "title": "hackaton/fiedler",
+  "version": "0.0.1",
+  "main": "gulpfile.js",
+  "author": "Missing Semicolon",
+  "devDependencies": {
+    "bootstrap": "^4.0.0-beta",
+    "browser-sync": "^2.18.13",
+    "colors": "^1.1.2",
+    "cssnano": "^3.10.0",
+    "d3": "^4.11.0",
+    "gulp": "3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-minify": "^1.0.0",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^7.0.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-wait2": "0.0.5",
+    "gulp-watch": "^4.3.11",
+    "merge-stream": "^1.0.1",
+    "read-config": "^2.0.0",
+    "yargs": "^8.0.2"
+  },
+  "private": true,
+  "scripts": {
+    "init": "npm install && gulp build",
+    "build": "gulp build",
+    "production": "gulp build",
+    "watch": "gulp"
+  }
+}
