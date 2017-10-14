@@ -10,6 +10,7 @@
     <title>{ifset title}{include title|stripHtml} | {/ifset}Nette Sandbox</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{$basePath}/css/main.css">
     {block head}{/block}
 </head>
@@ -17,14 +18,14 @@
 <body>
     <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-navbar">
         <a class="navbar-brand" href="#">Dashboard</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav nav-pills mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="{$baseUrl}">Home</a>
                 </li>
