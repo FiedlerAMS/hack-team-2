@@ -8,5 +8,5 @@ class Station
     public $purpose;
     public $label;
     public $utcOffset;
-    public $channels;
+    public $channels = [];
 }
