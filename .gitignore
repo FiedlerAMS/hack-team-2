@@ -13,3 +13,4 @@ www/js/concat.js
 www/js/concat-debug.js
 
 gulp-config.local.json
+/facebook
