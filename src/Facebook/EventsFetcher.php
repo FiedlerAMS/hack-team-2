@@ -21,8 +21,8 @@ class EventsFetcher
 
     public function fetchEvents($timestamp)
     {
-        $since = $timestamp;
-        $until = $since + 1 * 60 * 60;
+        $since = $timestamp + 3600 * 1;
+        $until = $since + 3600 * 1;
 
         $query = http_build_query([
             'since' => $since,

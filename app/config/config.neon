@@ -36,3 +36,4 @@ services:
 	- Hack\Facebook\FacebookRequester
 	- Hack\Facebook\EventsFetcher
 	- Hack\Facebook\AttendeesCounter
+	- Hack\Facebook\GetAttendeesForEventsInTimeUseCase
