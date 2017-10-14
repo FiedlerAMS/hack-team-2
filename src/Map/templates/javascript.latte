@@ -43,7 +43,8 @@
                     title: markerData.title,
                     draggable: false,
                     animation: google.maps.Animation.DROP,
-                    desc: ''
+                    desc: markerData.title,
+                    optimized: false
                 });
                 marker.addListener('click', function() {
                     openInfoWindow(marker);
