@@ -1,0 +1,62 @@
+{
+    "tasksPath": "./gulp-tasks",
+    "assetsPath": "./assets",
+    "distPath": "./www",
+    "css": {
+        "srcPath": "@{assetsPath}/scss",
+        "srcFiles": [
+            "@{assetsPath}/scss/*.scss"
+        ],
+        "watchPaths": [
+            "./node_modules/"
+        ],
+        "distPath": "@{distPath}/css"
+    },
+    "js": {
+        "srcPath": "@{assetsPath}/js",
+        "distPath": "@{distPath}/js",
+        "concat": [
+            {
+                "src": [
+                    "./node_modules/bootstrap/dist/js/bootstrap.js",
+
+                    "@{assetsPath}/js/concat/*.js"
+                ],
+                "dist": "concat.js"
+            }
+        ],
+        "copy": [
+            "@{assetsPath}/js/copy/**/*.js"
+        ]
+    },
+    "browserList": [
+        "> 1%",
+        "last 2 versions",
+        "Firefox ESR",
+        "Opera >= 23",
+        "ie >= 9",
+        "ie_mob >=10",
+        "ios >= 7",
+        "android >=4.4"
+    ],
+    "watch": [
+        {
+            "paths": "@{assetsPath}/scss/**/*.scss",
+            "exec": [
+                "sass-compile"
+            ]
+        },
+        {
+            "paths": "@{assetsPath}/js/**/*.js",
+            "exec": [
+                "js-compile"
+            ]
+        },
+        {
+            "paths": ["./src/**/**/*.{latte|php}", "./app/translation/**/*.neon"],
+            "exec": [
+                "bs-reload"
+            ]
+        }
+    ]
+}
