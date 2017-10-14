@@ -9,7 +9,6 @@
     "browser-sync": "^2.18.13",
     "colors": "^1.1.2",
     "cssnano": "^3.10.0",
-    "d3": "^4.11.0",
     "gulp": "3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-load-plugins": "^1.5.0",
