@@ -12,8 +12,14 @@
         </nav>
 
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3 gmap-container" role="main">
-            <div id="map"></div>
+            {control map}
         </main>
       </div>
     </div>
+{/block}
+
+{block scripts}
+    {include parent}
+
+    {control map:javascript}
 {/block}

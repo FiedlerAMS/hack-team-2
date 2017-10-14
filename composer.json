@@ -27,10 +27,11 @@
 		"latte/latte": "^2.4",
 		"tracy/tracy": "^2.4",
 		"dg/adminer-custom": "^1.9",
-		"mashape/unirest-php": "^3.0"
+		"mashape/unirest-php": "^3.0",
+		"webmozart/assert": "^1.2"
 	},
     "autoload": {
-        "App\\": ["src/App/"],
+		"App\\": ["src/App/"],
         "psr-4": {"Hack\\": "src/"}
     },
 	"require-dev": {
