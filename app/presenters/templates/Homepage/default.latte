@@ -4,14 +4,31 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-dark sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link active">
                     <div class="media">
                         <span class="fa fa-bus fa-fw d-flex align-self-center lead"></span>
                         <div class="media-body">
                             <h6 class="mt-2">Autobusy</h6>
                         </div>
+                        <button class="float-right btn btn-link text-light dropdown-toggle"  data-toggle="collapse" href="#dropdown-menu">
+                        </button>
                     </div>
                 </a>
+                <div id="dropdown-menu" class="collapse show">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" data-toggle="modal" data-target=".bd-example-modal-lg">Linka č. 11 <span class="fa fa-exclamation-triangle float-right mt-2"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#!">Linka č. 9</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#!">Linka č. 6</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-light" href="#">
                     <div class="media">
                         <span class="fa fa-thermometer-2 fa-fw d-flex align-self-center lead"></span>
@@ -20,6 +37,8 @@
                         </div>
                     </div>
                 </a>
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link text-light" href="#">
                     <div class="media">
                         <span class="fa fa-trash fa-fw d-flex align-self-center lead"></span>
@@ -33,13 +52,13 @@
         </nav>
 
         <div class="alerts">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4>Pozor</h4>
+                <h4><span class="fa fa-exclamation-triangle"></span> Linka č. 11 </h4>
                 <hr>
-                <button class="btn btn-link alert-link" data-toggle="modal" data-target=".bd-example-modal-lg">jdou k vam kuratka</button>
+                <button class="btn btn-link alert-link" data-toggle="modal" data-target=".bd-example-modal-lg">Pravděpodobné přetížení linky</button>
             </div>
         </div>
 
