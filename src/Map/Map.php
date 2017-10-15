@@ -21,8 +21,8 @@ class Map extends Control
     {
         parent::__construct();
         $this->googleApiKey = 'AIzaSyCsRdKR2PpfHiW9ZnAWswmQePCVvwiVTdw';
-        $this->setCenter(48.9834198, 14.4698109);
-        $this->setZoom(10);
+        $this->setCenter(48.9756555, 14.4752126);
+        $this->setZoom(13);
         $this->setDisplayResizingButton(false);
     }
 
@@ -48,7 +48,9 @@ class Map extends Control
             'points' => array_map(function (MapRecord $record) {
                 return $record->toArray();
             }, $records['points']),
-            'color' => $records['color'] ?? '',
+            'color' => $records['color'] ?? '#bada55',
+            'busIcon' => $records['busIcon'] ?? '',
+            'busColor' => $records['busColor'] ?? '#000000',
         ];
     }
 

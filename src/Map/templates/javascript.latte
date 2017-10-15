@@ -38,21 +38,22 @@
         var lines = [];
 
         var records = {$records|noescape};
-        console.log(records);
         for (var ri = 0; ri < records.length; ri++){
             var road = records[ri];
             var lineSymbol = {
-                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                scale: 5,
-                strokeColor: '#393'
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 8,
+                strokeOpacity: 1,
+                strokeColor: road.busColor
             };
+            console.log(road.busIcon);
             var directPolyline = new google.maps.Polyline({
                 strokeColor: road.color,
-                strokeOpacity: 1,
-                strokeWeight: 2,
+                strokeOpacity: 0.5,
+                strokeWeight: 4,
                 icons: [{
                     icon: lineSymbol,
-                    offset: '100%'
+                    optimized: false
                 }]
             });
             for (var rp = 0; rp < road.points.length; rp++) {

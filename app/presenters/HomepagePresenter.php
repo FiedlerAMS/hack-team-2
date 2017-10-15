@@ -29,7 +29,7 @@ class HomepagePresenter extends BasePresenter
     public function startup()
     {
         parent::startup();
-        $this->baseUrl = $this->getHttpRequest()->getUrl()->baseUrl;
+        $this->baseUrl = rtrim($this->getHttpRequest()->getUrl()->baseUrl, '/');
     }
 
     protected function createComponentMap()
@@ -72,16 +72,19 @@ class HomepagePresenter extends BasePresenter
         $prefix = 'snapped'; 
         $files = [
             [
+                'file' => __DIR__ . "/routes/{$prefix}19.json",
+                'color' => '#0000ff',
+                'isInvalid' => false,
+            ],
+            [
                 'file' => __DIR__ . "/routes/{$prefix}3.json",
                 'color' => '#00ff00',
+                'isInvalid' => true,
             ],
             [
                 'file' => __DIR__ . "/routes/{$prefix}11.json",
                 'color' => '#ff0000',
-            ],
-            [
-                'file' => __DIR__ . "/routes/{$prefix}19.json",
-                'color' => '#0000ff',
+                'isInvalid' => false,
             ],
         ];
         foreach ($files as $data) {
@@ -99,11 +102,15 @@ class HomepagePresenter extends BasePresenter
                     ''
                 );
                 $records['color'] = $data['color'];
+                $records['busColor'] = $data['isInvalid'] 
+                    ? '#ff0000'
+                    : '#000000'
+                ;
             }
             $this['map']->appendRecords($records);
         }
         
-        $this['map']->setZoom(13);
+        $this['map']->setZoom(15);
     }
 
     public function renderDefault()
