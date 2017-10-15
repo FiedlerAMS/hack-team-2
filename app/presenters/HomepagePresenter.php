@@ -69,7 +69,7 @@ class HomepagePresenter extends BasePresenter
 
     private function json()
     {
-        $prefix = 'snapped'; // 
+        $prefix = 'snapped'; 
         $files = [
             [
                 'file' => __DIR__ . "/routes/{$prefix}3.json",
