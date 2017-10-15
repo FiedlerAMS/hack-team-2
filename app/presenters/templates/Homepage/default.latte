@@ -53,7 +53,7 @@
 {/block}
 
 {block sidepanel}
-    <div class="sidepanel modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+    <div id="js-main-sidepanel" class="sidepanel modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
         aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             {include '../Sidepanel/default.latte'}
@@ -65,4 +65,46 @@
     {include parent}
 
     {control map:javascript}
+
+    <script type="text/javascript">
+        var stationsPrediction = $('.js-stations-future');
+        var predictions = $('.js-prediction');
+        stationsPrediction.hide();
+        $('#js-main-sidepanel').on('shown.bs.modal', function (e) {
+            stationsPrediction.fadeIn('slow');
+        });
+    </script>
+
+    <script>
+
+        // define colors so text can also be colored
+        var colors = ["#00ACE4", "#00D8A5", "#9b59b6", "#F1B719", "#e74c3c"];
+
+        // init Fancychart with Fancychart(width, height, colors, color_deactivated)
+        var chart = new Fancychart(100, 60, colors, '#e5e5e5');
+        /*
+        // change color of text and init pie chart
+        document.getElementById('pieText').style.color = colors[0];
+        var val = document.getElementById("pieChart").getAttribute('data-value');
+        chart.donut("#pieChart", val, colors[0]);
+
+        document.getElementById('barVerticalText').style.color = colors[1];
+        var val = document.getElementById("barChartVertical").getAttribute('data-value');
+        chart.barVertical("#barChartVertical", val, colors[1]);
+
+        document.getElementById('barVerticalRotateText').style.color = colors[2];
+        var val = document.getElementById("barChartVerticalRotate").getAttribute('data-value');
+        chart.barVertical("#barChartVerticalRotate", val, colors[2], true);
+
+
+        document.getElementById('barHorizontalText').style.color = colors[3];
+        var val = document.getElementById("barChartHorizontal").getAttribute('data-value');
+        chart.barHorizontal("#barChartHorizontal", val, colors[3]);
+        */
+        document.getElementById('circleText').style.color = colors[4];
+        var val = document.getElementById("circleChart").getAttribute('data-value');
+        chart.circles("#circleChart", val, colors[4]);
+
+    </script>
+
 {/block}
