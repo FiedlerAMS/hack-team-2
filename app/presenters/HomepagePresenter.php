@@ -42,28 +42,6 @@ class HomepagePresenter extends BasePresenter
         $this['map']->setRecords($records);
     }
 
-    public function actionLine()
-    {
-        $string = file_get_contents(__DIR__ . '/sample.json');
-        $json = json_decode($string);
-        $line = [];
-        foreach($json->oLineMapData->aoStations as $station) {
-            foreach ((array) $station->aoCoor as $coor) {
-                $stat = new \stdClass();
-                $stat->lat = $coor->x;
-                $stat->lng = $coor->y;
-                $stat->name = $station->Name;
-                $line[] = $stat;
-            }
-            $stat = new \stdClass();
-            $stat->lat = $station->Lat;
-            $stat->lng = $station->Lng;
-            $stat->name = $station->Name;
-            $line[] = $stat;
-        }
-        $this->sendJson($line);
-    }
-
     public function actionWeather()
     {
         dump($this->weatherApi->getWeather(new \DateTime('NOW')));
