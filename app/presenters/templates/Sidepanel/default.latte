@@ -1,65 +1,87 @@
-<table class="js-stations-current timeline">
-    <tbody>
-        <tr>
-            <td class="text-success">5</td>
-            <td>
-                <strong>Zastávka 1</strong> <br>
-                <small>Jméno zastávky</small>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-success">18</td>
-            <td>
-                <strong>Zastávka 2</strong> <br>
-                <small>Jméno zastávky</small>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-success">12</td>
-            <td>
-                <strong>Zastávka 3</strong> <br>
-                <small>Jméno zastávky</small>
-            </td>
-        </tr>
-        <tr class="current">
-            <td class="text-warning">36</td>
-            <td>
-                <strong>Zastávka 4</strong> <br>
-                <small>Jméno zastávky</small>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="modal-content">
+    <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">
+            Linka č. 11<br>
+            <small>
+                Počet vozů: 1<br>
+                Max. kapacita vozu: 50 osob
+            </small>
+        </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="js-stations-current timeline">
+            <tbody>
+                <tr>
+                    <td class="text-success">5</td>
+                    <td>
+                        <strong>Zastávka 1</strong> <br>
+                        <small>Jméno zastávky</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-success">18</td>
+                    <td>
+                        <strong>Zastávka 2</strong> <br>
+                        <small>Jméno zastávky</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-success">12</td>
+                    <td>
+                        <strong>Zastávka 3</strong> <br>
+                        <small>Jméno zastávky</small>
+                    </td>
+                </tr>
+                <tr class="current">
+                    <td class="text-warning">36</td>
+                    <td>
+                        <strong>Zastávka 4</strong> <br>
+                        <small>Jméno zastávky</small>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-<table class="js-stations-future timeline timeline--future">
-    <thead>
-        <th colspan="2" class="timeline__strike">
-            <span>
-                Predikce
-            </span>
-        </th>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="text-danger">56</td>
-            <td>
-                <strong>Zastávka 5</strong> <br>
-                <small>Jméno zastávky</small>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-danger font-weight-bold">64</td>
-            <td>
-                <strong>Zastávka 6</strong> <br>
-                <small>Jméno zastávky</small>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-success">30</td>
-            <td>
-                <strong>Zastávka 7</strong> <br>
-                <small>Jméno zastávky</small>
-            </td>
-        </tr>
-    </tbody>
-</table>
+        <table class="js-stations-future timeline timeline--future">
+            <thead>
+            <th colspan="2" class="timeline__strike">
+                <span>
+                    Predikce
+                </span>
+            </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-danger">56</td>
+                    <td>
+                        <strong>Zastávka 5</strong> <br>
+                        <small>Jméno zastávky</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-danger font-weight-bold">64</td>
+                    <td>
+                        <strong>Zastávka 6</strong> <br>
+                        <small>Jméno zastávky</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-success">30</td>
+                    <td>
+                        <strong>Zastávka 7</strong> <br>
+                        <small>Jméno zastávky</small>
+                    </td>
+                </tr>
+            </tbody>
+        </table>                    
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-lg">
+            <strong>+</strong><span class="fa fa-bus"></span>
+            Posílit spoj
+        </button>
+    </div>
+</div>
