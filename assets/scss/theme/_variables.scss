@@ -32,7 +32,7 @@ $purple:  #613d7c;
 $pink:    #ff5b77;
 $red:     #d9534f;
 $orange:  #E74C3C;
-$yellow:  #F39C12;
+$yellow:  #f3c612;
 $green:   #3bc158;
 $teal:    #18BC9C;
 $cyan:    #5bc0de;
@@ -61,7 +61,9 @@ $theme-colors: (
   warning: $yellow,
   danger: $red,
   light: $gray-100,
-  dark: $gray-800
+  dark: $gray-800,
+  navbar: $teal,
+  navbar-items: darken($teal, 10%)
 );
 
 
