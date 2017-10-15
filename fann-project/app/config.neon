@@ -1,0 +1,7 @@
+
+parameters:
+    version: 0.0.1
+
+services:
+    configBuilder: Fann\Config\ConfigBuilder
+    createData: Fann\App\CreateDataUseCase

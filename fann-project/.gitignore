@@ -1,0 +1,8 @@
+.vagrant
+vendor
+temp
+
+*.data
+*.net
+*.csv
+*.config
