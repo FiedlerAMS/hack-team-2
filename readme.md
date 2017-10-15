@@ -20,3 +20,7 @@ Requirements for fann project
 -----------------------------
 - PHP Fann lib
 - PHP Statistics lib (optional - we´ve got the fallback)
+
+Tests for fann project
+------------------------------
+fann-project/tests/
