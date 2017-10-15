@@ -42,6 +42,16 @@ class Map extends Control
         $this->records = $records;
     }
 
+    public function appendRecords(array $records)
+    {
+        $this->records[] = [
+            'points' => array_map(function (MapRecord $record) {
+                return $record->toArray();
+            }, $records['points']),
+            'color' => $records['color'] ?? '',
+        ];
+    }
+
     public function setDisplayResizingButton($displayResizingButton)
     {
         $this->displayResizingButtons = $displayResizingButton;
@@ -57,9 +67,7 @@ class Map extends Control
     {
         $this->template->center = $this->center;
         $this->template->zoom = $this->zoom;
-        $this->template->records = json_encode(array_map(function (MapRecord $record) {
-            return $record->toArray();
-        }, $this->records));
+        $this->template->records = json_encode($this->records);
         $this->template->googleApiKey = $this->googleApiKey;
         $this->template->setFile(__DIR__ . '/templates/javascript.latte');
         $this->template->render();

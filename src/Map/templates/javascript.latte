@@ -1,6 +1,23 @@
 <script>
     var map;
     function initMap() {
+        google.maps.LatLng.prototype.kmTo = function(a){
+            var e = Math, ra = e.PI/180;
+            var b = this.lat() * ra, c = a.lat() * ra, d = b - c;
+            var g = this.lng() * ra - a.lng() * ra;
+            var f = 2 * e.asin(e.sqrt(e.pow(e.sin(d/2), 2) + e.cos(b) * e.cos
+            (c) * e.pow(e.sin(g/2), 2)));
+            return f * 6378.137;
+        };
+
+        google.maps.Polyline.prototype.inKm = function(n){
+            var a = this.getPath(n), len = a.getLength(), dist = 0;
+            for (var i=0; i < len-1; i++) {
+                dist += a.getAt(i).kmTo(a.getAt(i+1));
+            }
+            return dist;
+        };
+
         var mapElement = document.getElementById('map');
 
         map = new google.maps.Map(mapElement, {
@@ -17,73 +34,119 @@
         });
         var iw = new google.maps.InfoWindow();
         var markerList = {};
-        
-        var openInfoWindow = function(marker){
-            iw.setContent(marker.desc);
-            iw.open(map, marker);
-        };
+        var snappedCoordinates = [];
+        var lines = [];
 
         var records = {$records|noescape};
-        for (var key in records){
-            if(!records.hasOwnProperty(key)){
-                continue;
+        console.log(records);
+        for (var ri = 0; ri < records.length; ri++){
+            var road = records[ri];
+            var lineSymbol = {
+                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                scale: 5,
+                strokeColor: '#393'
+            };
+            var directPolyline = new google.maps.Polyline({
+                strokeColor: road.color,
+                strokeOpacity: 1,
+                strokeWeight: 2,
+                icons: [{
+                    icon: lineSymbol,
+                    offset: '100%'
+                }]
+            });
+            for (var rp = 0; rp < road.points.length; rp++) {
+                var point = road.points[rp];
+                (function(){
+                    var latLng = new google.maps.LatLng(parseFloat(point.latitude), parseFloat(point.longitude));
+                    var path = directPolyline.getPath();
+                    path.push(latLng);
+                    
+//                    var markerData = point;
+//                    var markerImageHtml = markerData.image ? '<img src="' + markerData.image + '" alt="' + markerData.title + '"/>' : '';
+//                    var marker = new google.maps.Marker({
+//                        position: latLng,
+//                        icon: markerData.marker,
+//                        optimized: false,
+//                        map: map,
+//                        title: markerData.title,
+//                        draggable: false,
+//                        animation: google.maps.Animation.DROP,
+//                        desc: markerData.title
+//                    });
+                })();
             }
-
-            (function(){
-                var markerData = records[key];
-                var markerImageHtml = markerData.image ? '<img src="' + markerData.image + '" alt="' + markerData.title + '"/>' : '';
-                var marker = new google.maps.Marker({
-                    position: {
-                        lat: parseFloat(markerData.latitude),
-                        lng: parseFloat(markerData.longitude)
-                    },
-                    icon: markerData.marker,
-                    optimized: false,
-                    map: map,
-                    title: markerData.title,
-                    draggable: false,
-                    animation: google.maps.Animation.DROP,
-                    desc: ''
-                });
-                marker.addListener('click', function() {
-                    openInfoWindow(marker);
-                });
-                markerList[markerData.htmlTargetId] = marker;
-            })();
+            directPolyline.setMap(map);
+            lines.push(directPolyline);
         }
 
-        var scrollListToTop = function() {
-            var section = $('.js-map-grid-wrapper').parent();
-            var rect = section[0].getBoundingClientRect();
-            if (rect.top > 70) {
-                $('html,body').animate({ scrollTop: section.offset().top - 70 }, 200);
-            }
-        };
+        roads(map, lines);
+//        runSnapToRoad(lines[0].getPath());
 
-        $('.js-map-grid-wrapper').on('click', function(e){
-            var button = $(e.target).closest('.js-map-record-target');
-            if (!button.length) {
-                return;
+        // Snap a user-created polyline to roads and draw the snapped path
+        function runSnapToRoad(path) {
+            var splitted = 0;
+            var counter = 0;
+            var pathValues = [];
+            for (var i = 0; i < path.getLength(); i++) {
+                if (!Array.isArray(pathValues[splitted])) {
+                    pathValues[splitted] = [];
+                }
+
+                pathValues[splitted].push(path.getAt(i).toUrlValue());
+                counter++;
+                if (counter >= 100) {
+                    splitted++;
+                    counter = 0;
+                }
             }
 
-            e.preventDefault();
-            var id = button.data('map-id');
-            var marker = markerList[id];
-            if (undefined === marker) {
-                return;
+            var funcs = [];
+            for (var j = 0; j < pathValues.length; j++) {
+                var genFunc = (function(data){
+                    return $.get('https://roads.googleapis.com/v1/snapToRoads', {
+                        interpolate: true,
+                        key: {$googleApiKey},
+                        path: data.join('|')
+                    });
+                })(pathValues[j]);
+                funcs.push(genFunc);
             }
 
-            scrollListToTop();
-            map.panTo(marker.getPosition());
-            openInfoWindow(marker);
-        });
-        
-        roads(map);
+            $.when.apply($, funcs).done(function(){
+                for (var i = 0; i < arguments.length; i++) {
+                    processSnapToRoadResponse(arguments[i][0]);
+                }
+                drawSnappedPolyline();
+            });
+        }
+    
+        // Store snapped polyline returned by the snap-to-road service.
+        function processSnapToRoadResponse(data) {
+            for (var i = 0; i < data.snappedPoints.length; i++) {
+                var latlng = new google.maps.LatLng(
+                    data.snappedPoints[i].location.latitude,
+                    data.snappedPoints[i].location.longitude
+                );
+                snappedCoordinates.push(latlng);
+            }
+        }
+    
+        // Draws the snapped polyline (after processing snap-to-road response).
+        function drawSnappedPolyline() {
+            $('body').html(JSON.stringify(snappedCoordinates));
+            var snappedPolyline = new google.maps.Polyline({
+                path: snappedCoordinates,
+                strokeColor: '#00FF00',
+                strokeWeight: 3
+            });
+            snappedPolyline.setMap(map);
+        }
     }
     
-    var roads = function(map) {
+    var roads = function(map, lines) {
         
-        var avgBusSpeed = 16.6666; // m/s = 60km/h
+        var avgBusSpeed = 12.6666; // m/s = 60km/h
         
         var lineSymbol = {
             path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
@@ -108,22 +171,31 @@
                 }],
             map: map
         });
+//        animateCircle(line, 1000);
 
-        animateCircle(line, 1000);
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        var startFrom;
+        for (var i = 0; i < lines.length; i++) {
+            startFrom = i > 0 ? getRandomArbitrary(15, 40) : 0; // mock start
+            animateCircle(lines[i], lines[i].inKm() * 1000, startFrom);
+        }
 
         /**
          * @param line GMap PolyLine
          * @param pathLenght length in meters
+         * @param startFrom
          */
-        function animateCircle(line, pathLenght) {
-            var count = 0;
+        function animateCircle(line, pathLenght, startFrom) {
             var steps = parseInt(pathLenght / avgBusSpeed);
+            var count = steps / 100 * startFrom;
             var animationInterval = window.setInterval(function () {
                 count = (count + 1);
                 var icons = line.get('icons');
                 icons[0].offset = (count / (steps / 100) ) + '%';
                 line.set('icons', icons);
-                console.log(count);
+//                console.log(count);
                 if (count >= steps) {
                     clearInterval(animationInterval);
                 }
