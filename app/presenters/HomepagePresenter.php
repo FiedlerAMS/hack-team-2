@@ -103,7 +103,7 @@ class HomepagePresenter extends BasePresenter
             $this['map']->appendRecords($records);
         }
         
-        $this['map']->setZoom(15);
+        $this['map']->setZoom(13);
     }
 
     public function renderDefault()

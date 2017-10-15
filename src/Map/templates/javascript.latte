@@ -18,15 +18,25 @@
         var iw = new google.maps.InfoWindow();
         var markerList = {};
         var snappedCoordinates = [];
+        var lines = [];
 
         var records = {$records|noescape};
         console.log(records);
         for (var ri = 0; ri < records.length; ri++){
             var road = records[ri];
+            var lineSymbol = {
+                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                scale: 5,
+                strokeColor: '#393'
+            };
             var directPolyline = new google.maps.Polyline({
                 strokeColor: road.color,
                 strokeOpacity: 1,
-                strokeWeight: 2
+                strokeWeight: 2,
+                icons: [{
+                    icon: lineSymbol,
+                    offset: '100%'
+                }]
             });
             for (var rp = 0; rp < road.points.length; rp++) {
                 var point = road.points[rp];
@@ -50,10 +60,10 @@
                 })();
             }
             directPolyline.setMap(map);
-            console.log(directPolyline);
+            lines.push(directPolyline);
         }
 
-        roads(map);
+        roads(map, lines);
 //        runSnapToRoad(directPolyline.getPath());
 
         // Snap a user-created polyline to roads and draw the snapped path
@@ -116,7 +126,7 @@
         }
     }
     
-    var roads = function(map) {
+    var roads = function(map, lines) {
         
         var avgBusSpeed = 16.6666; // m/s = 60km/h
         
@@ -143,8 +153,11 @@
                 }],
             map: map
         });
+//        animateCircle(line, 1000);
 
-        animateCircle(line, 1000);
+        for (var i = 0; i < lines.length; lines++) {
+            animateCircle(lines[i], 1000);
+        }
 
         /**
          * @param line GMap PolyLine
@@ -158,7 +171,7 @@
                 var icons = line.get('icons');
                 icons[0].offset = (count / (steps / 100) ) + '%';
                 line.set('icons', icons);
-                console.log(count);
+//                console.log(count);
                 if (count >= steps) {
                     clearInterval(animationInterval);
                 }
