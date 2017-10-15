@@ -17,76 +17,44 @@
         });
         var iw = new google.maps.InfoWindow();
         var markerList = {};
-        var directPolyline = new google.maps.Polyline({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0,
-            strokeWeight: 2
-        });
-        directPolyline.setMap(map);
         var snappedCoordinates = [];
 
-        var openInfoWindow = function(marker){
-            iw.setContent(marker.desc);
-            iw.open(map, marker);
-        };
-
         var records = {$records|noescape};
-        for (var key in records){
-            if(!records.hasOwnProperty(key)){
-                continue;
+        console.log(records);
+        for (var ri = 0; ri < records.length; ri++){
+            var road = records[ri];
+            var directPolyline = new google.maps.Polyline({
+                strokeColor: road.color,
+                strokeOpacity: 1,
+                strokeWeight: 2
+            });
+            for (var rp = 0; rp < road.points.length; rp++) {
+                var point = road.points[rp];
+                (function(){
+                    var latLng = new google.maps.LatLng(parseFloat(point.latitude), parseFloat(point.longitude));
+                    var path = directPolyline.getPath();
+                    path.push(latLng);
+                    
+//                    var markerData = point;
+//                    var markerImageHtml = markerData.image ? '<img src="' + markerData.image + '" alt="' + markerData.title + '"/>' : '';
+//                    var marker = new google.maps.Marker({
+//                        position: latLng,
+//                        icon: markerData.marker,
+//                        optimized: false,
+//                        map: map,
+//                        title: markerData.title,
+//                        draggable: false,
+//                        animation: google.maps.Animation.DROP,
+//                        desc: markerData.title
+//                    });
+                })();
             }
-
-            (function(){
-                var markerData = records[key];
-                var markerImageHtml = markerData.image ? '<img src="' + markerData.image + '" alt="' + markerData.title + '"/>' : '';
-                var latLng = new google.maps.LatLng(parseFloat(markerData.latitude), parseFloat(markerData.longitude));
-                var path = directPolyline.getPath();
-                path.push(latLng);
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    icon: markerData.marker,
-                    optimized: false,
-                    map: map,
-                    title: markerData.title,
-                    draggable: false,
-                    animation: google.maps.Animation.DROP,
-                    desc: markerData.title,
-                });
-                marker.addListener('click', function() {
-                    openInfoWindow(marker);
-                });
-                markerList[markerData.htmlTargetId] = marker;
-            })();
+            directPolyline.setMap(map);
+            console.log(directPolyline);
         }
 
-        var scrollListToTop = function() {
-            var section = $('.js-map-grid-wrapper').parent();
-            var rect = section[0].getBoundingClientRect();
-            if (rect.top > 70) {
-                $('html,body').animate({ scrollTop: section.offset().top - 70 }, 200);
-            }
-        };
-
-        $('.js-map-grid-wrapper').on('click', function(e){
-            var button = $(e.target).closest('.js-map-record-target');
-            if (!button.length) {
-                return;
-            }
-
-            e.preventDefault();
-            var id = button.data('map-id');
-            var marker = markerList[id];
-            if (undefined === marker) {
-                return;
-            }
-
-            scrollListToTop();
-            map.panTo(marker.getPosition());
-            openInfoWindow(marker);
-        });
-
         roads(map);
-        runSnapToRoad(directPolyline.getPath());
+//        runSnapToRoad(directPolyline.getPath());
 
         // Snap a user-created polyline to roads and draw the snapped path
         function runSnapToRoad(path) {
