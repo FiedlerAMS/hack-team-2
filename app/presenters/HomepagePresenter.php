@@ -4,6 +4,7 @@ namespace App\Presenters;
 
 use Hack\Api\Bus\BusesUseCase;
 use Hack\Api\Entity\ChannelData;
+use Hack\Facebook\GetAttendeesForEventsInTimeUseCase;
 use Hack\Map\MapFactoryInterface;
 use Hack\Map\MapRecord;
 use Hack\OpenWeather\OpenWeatherApi;
@@ -14,16 +15,19 @@ class HomepagePresenter extends BasePresenter
     private $weatherApi;
     private $busesUseCase;
     private $baseUrl;
+    private $fbUc;
 
     public function __construct(
         MapFactoryInterface $mapFactory,
         OpenWeatherApi $weatherApi,
-        BusesUseCase $useCase
+        BusesUseCase $useCase,
+        GetAttendeesForEventsInTimeUseCase $fbUc
     ) {
         parent::__construct();
         $this->mapFactory = $mapFactory;
         $this->weatherApi = $weatherApi;
         $this->busesUseCase = $useCase;
+        $this->fbUc = $fbUc;
     }
 
     public function startup()
@@ -117,6 +121,8 @@ class HomepagePresenter extends BasePresenter
     {
 //        $this->buses();
         $this->json();
+        $getPeoples = $this->fbUc;
+        $this->template->fb = $getPeoples(1508000400);
     }
 
     public function actionWeather()
