@@ -136,7 +136,7 @@ body {
 .timeline {
     width: 100%;
     max-width: 480px;
-    margin: 1rem 0;
+    margin: 1rem auto;
     font-size: 125%;
 
     th,
@@ -177,6 +177,7 @@ body {
     tbody {
         td {
             position: relative;
+            z-index: 1;
 
             &:first-child {
                 text-align: right;
@@ -184,19 +185,7 @@ body {
                 border-top-left-radius: $border-radius;
                 border-bottom-left-radius: $border-radius;
 
-                &::after {
-                    content: '';
-                    background: $gray-300;
-                    position: absolute;
-                    top: 50%;
-                    right: -0.625rem;
-                    display: block;
-                    width: 1rem;
-                    height: 1rem;
-                    margin: -.5rem 0 0 0 ;
-                    border-radius: 100%;
-                }
-
+                
                 &::before {
                     content: '\f007';
                     @include fa();
@@ -204,10 +193,23 @@ body {
                     margin-right: 4px;
                 }
             }
-
+            
             &:last-child {
                 border-top-right-radius: $border-radius;
                 border-bottom-right-radius: $border-radius;
+                
+                &::after {
+                    content: '';
+                    background: $gray-300;
+                    position: absolute;
+                    top: 50%;
+                    left: -0.625rem;
+                    display: block;
+                    width: 1rem;
+                    height: 1rem;
+                    margin: -.5rem 0 0 0 ;
+                    border-radius: 100%;
+                }
             }
         }
 
@@ -215,14 +217,17 @@ body {
             opacity: 1;
 
             &.current {
-                background: $gray-100;
                 position: relative;
+                
+                td {
+                    background-color: $gray-100;
+                }
 
                 td:first-child::before {
                     opacity: 1;
                 }
 
-                td:first-child::after {
+                td:last-child::after {
                     background: $gray-700;
                 }
             }

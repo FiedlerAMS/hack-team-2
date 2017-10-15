@@ -7,85 +7,131 @@
                 Max. kapacita vozu: 50 osob
             </small>
         </h3>
-        
-        <h1 id="circleText">68%</h1>
+
+        <h1 id="circleText" class="ml-5">
+            <small style="font-size:12px;line-height:12px;display:inline-block;margin:0">předpokládaná <br>obsazenost</small><br>
+            68%
+        </h1>
         <div id="circleChart" class="chart bar" data-value="68"></div>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body">
-        <table class="js-stations-current timeline">
-            <tbody>
-                <tr>
-                    <td class="text-success">5</td>
-                    <td>
-                        <strong>Zastávka 1</strong> <br>
-                        <small>Jméno zastávky</small>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-success">18</td>
-                    <td>
-                        <strong>Zastávka 2</strong> <br>
-                        <small>Jméno zastávky</small>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-success">12</td>
-                    <td>
-                        <strong>Zastávka 3</strong> <br>
-                        <small>Jméno zastávky</small>
-                    </td>
-                </tr>
-                <tr class="current">
-                    <td class="text-warning">36</td>
-                    <td>
-                        <strong>Zastávka 4</strong> <br>
-                        <small>Jméno zastávky</small>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="js-stations-future timeline timeline--future">
-            <thead>
-            <th colspan="2" class="timeline__strike">
-                <span>
-                    Predikce
-                </span>
-            </th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="text-danger">56</td>
-                    <td>
-                        <strong>Zastávka 5</strong> <br>
-                        <small>Jméno zastávky</small>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-danger font-weight-bold">64</td>
-                    <td>
-                        <strong>Zastávka 6</strong> <br>
-                        <small>Jméno zastávky</small>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-success">30</td>
-                    <td>
-                        <strong>Zastávka 7</strong> <br>
-                        <small>Jméno zastávky</small>
-                    </td>
-                </tr>
-            </tbody>
-        </table>                    
+    <div class="modal-header ">
+        <span class="btn">Akce:</span>
+        <div class="btn-group">
+            <a href="tel:123456789" class="btn btn-outline-primary btn-lg align-right">
+                <span class="fa fa-phone"></span>
+                Zavolat řidiči
+            </a>
+            <button type="button" class="btn btn-success btn-lg align-right">
+                <strong>+</strong><span class="fa fa-bus"></span>
+                Posílit linku
+            </button>
+        </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-success btn-lg">
-            <strong>+</strong><span class="fa fa-bus"></span>
-            Posílit spoj
-        </button>
+    <div class="modal-body">
+        <ul class="nav justify-content-center nav-pills nav-fill border rounded">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#timeline">Trasa</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#info">Další informace</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="timeline" role="tabpanel">
+                <table class="js-stations-current timeline">
+                    <tbody>
+                        <tr>
+                            <td class="text-success">5</td>
+                            <td>
+                                <strong>Zastávka 1</strong> <br>
+                                <small>Jméno zastávky</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-success">18</td>
+                            <td>
+                                <strong>Zastávka 2</strong> <br>
+                                <small>Jméno zastávky</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-success">12</td>
+                            <td>
+                                <strong>Zastávka 3</strong> <br>
+                                <small>Jméno zastávky</small>
+                            </td>
+                        </tr>
+                        <tr class="current">
+                            <td class="text-warning">36</td>
+                            <td>
+                                <strong>Zastávka 4</strong> <br>
+                                <small>Jméno zastávky</small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="js-stations-future timeline timeline--future">
+                    <thead>
+                    <th colspan="2" class="timeline__strike">
+                        <span>
+                            Predikce
+                        </span>
+                    </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-danger">56</td>
+                            <td>
+                                <strong>Zastávka 5</strong> <br>
+                                <small>Jméno zastávky</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-danger font-weight-bold">64</td>
+                            <td>
+                                <strong>Zastávka 6</strong> <br>
+                                <small>Jméno zastávky</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-success">30</td>
+                            <td>
+                                <strong>Zastávka 7</strong> <br>
+                                <small>Jméno zastávky</small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="info" role="tabpanel">
+                <div class="pt-5">
+                    <div class="card-columns">
+                        <div class="card border border-success">
+                            <div class="card-header">
+                                Počasí
+                            </div>
+                            <div class="card-body text-center">
+                                <h1 class="text-primary"><i class="wi wi-night-sleet"></i></h1>
+                                <span class="text-dark">Jasno</span>
+                            </div>
+                        </div>
+                        <div class="card border border-warning">
+                            <div class="card-header">
+                                FB Eventy
+                            </div>
+                            <div class="card-body text-center">
+                                <h1 class="text-primary">100</h1>
+                                lidí míří do města
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
