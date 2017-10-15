@@ -17,7 +17,14 @@
         });
         var iw = new google.maps.InfoWindow();
         var markerList = {};
-        
+        var directPolyline = new google.maps.Polyline({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0,
+            strokeWeight: 2
+        });
+        directPolyline.setMap(map);
+        var snappedCoordinates = [];
+
         var openInfoWindow = function(marker){
             iw.setContent(marker.desc);
             iw.open(map, marker);
@@ -32,11 +39,11 @@
             (function(){
                 var markerData = records[key];
                 var markerImageHtml = markerData.image ? '<img src="' + markerData.image + '" alt="' + markerData.title + '"/>' : '';
+                var latLng = new google.maps.LatLng(parseFloat(markerData.latitude), parseFloat(markerData.longitude));
+                var path = directPolyline.getPath();
+                path.push(latLng);
                 var marker = new google.maps.Marker({
-                    position: {
-                        lat: parseFloat(markerData.latitude),
-                        lng: parseFloat(markerData.longitude)
-                    },
+                    position: latLng,
                     icon: markerData.marker,
                     optimized: false,
                     map: map,
@@ -44,7 +51,6 @@
                     draggable: false,
                     animation: google.maps.Animation.DROP,
                     desc: markerData.title,
-                    optimized: false
                 });
                 marker.addListener('click', function() {
                     openInfoWindow(marker);
@@ -78,8 +84,68 @@
             map.panTo(marker.getPosition());
             openInfoWindow(marker);
         });
-        
+
         roads(map);
+        runSnapToRoad(directPolyline.getPath());
+
+        // Snap a user-created polyline to roads and draw the snapped path
+        function runSnapToRoad(path) {
+            var splitted = 0;
+            var counter = 0;
+            var pathValues = [];
+            for (var i = 0; i < path.getLength(); i++) {
+                if (!Array.isArray(pathValues[splitted])) {
+                    pathValues[splitted] = [];
+                }
+
+                pathValues[splitted].push(path.getAt(i).toUrlValue());
+                counter++;
+                if (counter >= 100) {
+                    splitted++;
+                    counter = 0;
+                }
+            }
+
+            var funcs = [];
+            for (var j = 0; j < pathValues.length; j++) {
+                var genFunc = (function(data){
+                    return $.get('https://roads.googleapis.com/v1/snapToRoads', {
+                        interpolate: true,
+                        key: {$googleApiKey},
+                        path: data.join('|')
+                    });
+                })(pathValues[j]);
+                funcs.push(genFunc);
+            }
+
+            $.when.apply($, funcs).done(function(){
+                for (var i = 0; i < arguments.length; i++) {
+                    processSnapToRoadResponse(arguments[i][0]);
+                }
+                drawSnappedPolyline();
+            });
+        }
+    
+        // Store snapped polyline returned by the snap-to-road service.
+        function processSnapToRoadResponse(data) {
+            for (var i = 0; i < data.snappedPoints.length; i++) {
+                var latlng = new google.maps.LatLng(
+                    data.snappedPoints[i].location.latitude,
+                    data.snappedPoints[i].location.longitude
+                );
+                snappedCoordinates.push(latlng);
+            }
+        }
+    
+        // Draws the snapped polyline (after processing snap-to-road response).
+        function drawSnappedPolyline() {
+            var snappedPolyline = new google.maps.Polyline({
+                path: snappedCoordinates,
+                strokeColor: '#00FF00',
+                strokeWeight: 3
+            });
+            snappedPolyline.setMap(map);
+        }
     }
     
     var roads = function(map) {
