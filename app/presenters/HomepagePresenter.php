@@ -132,9 +132,12 @@ class HomepagePresenter extends BasePresenter
 
     public function actionWeather()
     {
+        echo "<strong>NOW</strong><br />";
         dump($this->weatherApi->getWeather(new \DateTime('NOW')));
-        dump($this->weatherApi->getWeather(new \DateTime('NOW - 1DAY')));
+        echo "<strong>NOW + 52 hours</strong><br />";
         dump($this->weatherApi->getWeather(new \DateTime('NOW + 2DAYS 4HOURS')));
+        echo "<strong>YESTERDAY</strong>";
+        dump($this->weatherApi->getWeather(new \DateTime('NOW - 1DAY')));
         $this->terminate();
     }
 }
