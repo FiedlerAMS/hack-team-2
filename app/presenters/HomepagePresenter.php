@@ -122,7 +122,12 @@ class HomepagePresenter extends BasePresenter
 //        $this->buses();
         $this->json();
         $getPeoples = $this->fbUc;
-        $this->template->fb = $getPeoples(1508000400);
+        try {
+            $peoples = $getPeoples(1508000400);
+        } catch(\Exception $e) {
+            $peoples = 0;
+        }
+        $this->template->fb = $peoples;
     }
 
     public function actionWeather()
