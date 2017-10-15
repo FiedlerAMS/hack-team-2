@@ -77,7 +77,58 @@
             map.panTo(marker.getPosition());
             openInfoWindow(marker);
         });
-
+        
+        roads(map);
     }
+    
+    var roads = function(map) {
+        
+        var avgBusSpeed = 16.6666; // m/s = 60km/h
+        
+        var lineSymbol = {
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+            scale: 3,
+            strokeColor: '#393'
+        };
+
+        var line = new google.maps.Polyline({
+            path: [{
+                    lat: 51.4700,
+                    lng: 0.4543
+                }, {
+                    lat: 50.1109,
+                    lng: 8.6821
+                }],
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 0.5,
+            icons: [{
+                    icon: lineSymbol,
+                    offset: '100%'
+                }],
+            map: map
+        });
+
+        animateCircle(line, 1000);
+
+        /**
+         * @param line GMap PolyLine
+         * @param pathLenght length in meters
+         */
+        function animateCircle(line, pathLenght) {
+            var count = 0;
+            var steps = parseInt(pathLenght / avgBusSpeed);
+            var animationInterval = window.setInterval(function () {
+                count = (count + 1);
+                var icons = line.get('icons');
+                icons[0].offset = (count / (steps / 100) ) + '%';
+                line.set('icons', icons);
+                console.log(count);
+                if (count >= steps) {
+                    clearInterval(animationInterval);
+                }
+            }, 1000); // animation speed
+        }
+    };
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key={$googleApiKey}&callback=initMap"></script>
